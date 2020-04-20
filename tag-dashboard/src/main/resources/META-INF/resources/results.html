@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Realtime Tweets Hashtag Cloud</title>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
+</head>
+
+<body>
+    <h2> </h2>
+    <br>
+    <h2> </h2>
+    <div class="container">
+        <div class="row">
+  	    <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+        <div id="wordCloud"></div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.js"></script>
+<script src="jQWCloud.js"></script>
+<script>
+    $(function () {
+        var tags = [];
+        var source = new EventSource("/hashtags/stream");
+        source.onmessage = function (event) {
+            // Parse hashtag & weight
+            var input = event.data.split(":");
+            var tag = [{ word: input[0], weight: input[1] }];
+
+            // Check if the same hashtag exists in the tag cloud and get its index in the array
+            const objIndex = tags.findIndex((obj => obj.word === input[0]));
+
+            //If exists, then replace just the weight for the hashtag with the new incoming weight
+            if (objIndex > -1) {
+                // create a new element with hashtag and its new weight
+                const updatedObj = { ...tags[objIndex], weight: input[1] };
+                // create a new array with the updated element; 
+                // doing an in-place replace of the existing element
+                const updatedTags = [
+                    ...tags.slice(0, objIndex),
+                    updatedObj,
+                    ...tags.slice(objIndex + 1),
+                ];
+                // assign updated array to the existing array variable
+                tags = updatedTags;
+            } else {
+                // Add the new incoming hash tag to the tag cloud
+                Array.prototype.push.apply(tags, tag);
+            }
+
+            $("#wordCloud").jQWCloud({ words: tags });
+            document.getElementById("content").innerHTML = event.data;
+        };
+    });
+</script>
+
+</html>
