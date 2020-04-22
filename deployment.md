@@ -23,7 +23,8 @@ while sleep 5; do curl $URL ; done
 ```
 
 ## Open the hashtag-dashboard application in a browser
-Once the aforementioned 3 applications are up and running, access the tag cloud at http://localhost:8080/results.html, to see the twitter hashtags popping up in the hashtag cloud and getting changed at regular intervals (10s) based on realtime twitter feeds.
+Once the 3 applications are up and running, access the tag cloud at `http://localhost:8080/results.html`, to see the twitter hashtags popping up in the hashtag cloud and getting changed at regular intervals (10s) based on realtime twitter feeds.
+
 
 # For deploying and running the apps in Openshift
 ### Login to openshift
@@ -58,7 +59,7 @@ oc new-app hashtag-dashboard
 oc expose svc/hashtag-dashboard 
 ```
 
-### Invoke `tweet-poller` every 10s to get the latest tweets from twitter that corresponds to a given search term 
+Invoke `tweet-poller` every 10s to get the latest tweets from twitter that corresponds to a given search term .
 ```
 export URL="http://tweet-poller-sentiment.apps.cluster-f65d.f65d.example.opentlc.com/twitter/timeline?topic=covid&sample=20" 
 while sleep 10; do curl $URL ; done 
