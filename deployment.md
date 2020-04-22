@@ -1,12 +1,12 @@
 ## For local testing
-cd tweet-aggregator && mvn compile quarkus:dev
+```cd tweet-aggregator && mvn compile quarkus:dev
 cd ../tweet-poller && mvn compile quarkus:dev
-cd ../tag-dashboard && mvn compile quarkus:dev
+cd ../tag-dashboard && mvn compile quarkus:dev```
 
 export URL="http://localhost:8090/twitter/timeline?topic=covid&sample=20"
 while sleep 5; do curl $URL ; done
 
-## check the app in browser
+## Check the app in browser
 http://localhost:8080/results.html
 
 ## For deploying and running in Openshift
@@ -42,6 +42,6 @@ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic twitter-feeds
 bin/kafka-console-producer.sh --broker-list localhost:9092 --topic twitter-feeds --property "parse.key=true" --property "key.separator=:"
 
 ### Poll the URL from a laptop for every 10s to get the hashtags on to the tag cloud in the browser session
-export URL="http://localhost:8090/twitter/timeline?topic=covid&sample=20"
-export URL="http://tweet-poller-sentiment.apps.cluster-f65d.f65d.example.opentlc.com/twitter/timeline?topic=covid&sample=20"
-while sleep 5; do curl $URL ; done
+export URL="http://localhost:8090/twitter/timeline?topic=covid&sample=20" -- localhost
+export URL="http://tweet-poller-sentiment.apps.cluster-f65d.f65d.example.opentlc.com/twitter/timeline?topic=covid&sample=20" --OCP
+while sleep 5; do curl $URL ; done 
