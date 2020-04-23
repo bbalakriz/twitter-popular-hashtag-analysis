@@ -65,7 +65,7 @@ export URL="http://tweet-poller-sentiment.apps.cluster-f65d.f65d.example.opentlc
 while sleep 10; do curl $URL ; done 
 ```
 
-Once the 3 quarkus applications are running in OpenShift, access the URL `http://tweet-poller-sentiment.apps.cluster-f65d.f65d.example.opentlc.com/twitter/timeline?topic=covid&sample=20`, to see the twitter hashtags popping up in the tag cloud and getting changed at regular intervals (10s) based on realtime twitter feeds.
+Once the 3 quarkus applications are running in OpenShift, access the URL `http://hashtag-dashboard.apps.cluster-f65d.f65d.example.opentlc.com/results.html`, to see the twitter hashtags popping up in the tag cloud and getting changed at regular intervals (10s) based on realtime twitter feeds.
 
 
 <ins>*For troubleshooting*</ins>:
