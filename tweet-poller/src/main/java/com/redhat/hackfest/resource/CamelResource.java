@@ -50,14 +50,10 @@ public class CamelResource {
       tweet = consumerTemplate.receiveBodyNoWait(searchQuery, String.class);
       if (null != tweet) {
         tweetTimeStamp = tweet.substring(0, tweet.indexOf("(")).trim();
-      }
 
-      LOG.info("Tweet: " + tweet);
-      LOG.info("Timestamp in tweet: " + tweetTimeStamp);
-
-      // Pattern match hashtag
-      if (null != tweet) {
+        // Pattern match hashtag
         Matcher matcher = Pattern.compile("#[a-zA-Z0-9-_]*").matcher(tweet);
+       
         // Iterate over matches
         while (matcher.find()) {
           String hashTag = matcher.group();
